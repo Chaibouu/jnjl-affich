@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0D7702">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:title" content="Affiche — Dialogue Régional Intergénérationnel">
+    <meta property="og:description" content="Créez votre affiche personnalisée en quelques clics">
+    <meta property="og:image" content="https://chaibouu.github.io/DRISI-affiche/affiche.jpg">
+    <meta property="og:image:secure_url" content="https://chaibouu.github.io/DRISI-affiche/affiche.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chaibouu.github.io/DRISI-affiche/">
+    <title>Affiche — Dialogue Régional Intergénérationnel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0D7702;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 12px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            padding: 20px 16px;
+            padding-bottom: 90px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0D7702;
+            margin-bottom: 8px;
+            font-size: 1.15em;
+            line-height: 1.35;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 16px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .campaign-badge {
+            display: block;
+            background: #F13D06;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            text-align: center;
+            font-size: 0.85em;
+            line-height: 1.35;
+        }
+
+        .instructions {
+            background: #e8f5e9;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 4px solid #0D7702;
+        }
+
+        .instructions h3 {
+            color: #0D7702;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .instructions ol {
+            margin-left: 18px;
+            color: #555;
+            font-size: 0.88em;
+        }
+
+        .instructions li {
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px dashed #0D7702;
+            margin-bottom: 16px;
+        }
+
+        .upload-section h2 {
+            color: #333;
+            margin-bottom: 14px;
+            font-size: 1.1em;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 16px;
+            background: #0D7702;
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            min-height: 52px;
+            line-height: 1.2;
+            touch-action: manipulation;
+        }
+
+        .file-input-label:active {
+            background: #0a5d01;
+            transform: scale(0.98);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            margin: 12px auto 0;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.15s;
+            touch-action: manipulation;
+            min-height: 48px;
+        }
+
+        .btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: #0D7702;
+            color: white;
+        }
+
+        .btn-success {
+            background: #F13D06;
+            color: white;
+        }
+
+        .btn-adjust {
+            background: #0D7702;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: #F13D06;
+            color: white;
+            min-width: 48px;
+            min-height: 48px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .adjust-section {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px dashed #0D7702;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .adjust-section.active {
+            display: block;
+        }
+
+        .adjust-section h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .adjust-hint {
+            text-align: center;
+            color: #666;
+            margin-bottom: 12px;
+            font-size: 0.85em;
+            line-height: 1.35;
+        }
+
+        .adjust-preview-container {
+            position: relative;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid #0D7702;
+            cursor: grab;
+            background: #fff;
+            touch-action: none;
+            aspect-ratio: 1;
+        }
+
+        .adjust-preview-container:active {
+            cursor: grabbing;
+        }
+
+        .adjust-preview-container canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .adjust-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .adjust-controls label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .adjust-controls input[type="range"] {
+            flex: 1;
+            min-width: 120px;
+            height: 36px;
+            accent-color: #0D7702;
+        }
+
+        #zoomValue {
+            font-weight: bold;
+            color: #0D7702;
+            min-width: 44px;
+            text-align: center;
+        }
+
+        .move-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 48px);
+            gap: 6px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .canvas-section {
+            text-align: center;
+        }
+
+        .canvas-section h2 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .canvas-wrapper {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            background: #eee;
+            line-height: 0;
+        }
+
+        #canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 12px;
+            color: #0D7702;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .sticky-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .sticky-actions .btn {
+            flex: 1;
+            font-size: 0.9em;
+        }
+
+        .footer-signature {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            color: #aaa;
+            font-size: 0.8em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-signature .signature {
+            font-weight: bold;
+            color: #bbb;
+        }
+
+        @media (min-width: 520px) {
+            body {
+                padding: 24px;
+            }
+
+            .container {
+                padding: 28px 24px 100px;
+            }
+
+            h1 {
+                font-size: 1.35em;
+            }
+
+            .adjust-preview-container {
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dialogue Régional Intergénérationnel, Social et Inclusif</h1>
+        <div class="campaign-badge">Campagne « J'y serai » — Tillabéri, 22 au 24 sept. 2026</div>
+        <p class="subtitle">Créez votre affiche personnalisée en quelques clics</p>
+
+        <div class="instructions">
+            <h3>Comment faire ?</h3>
+            <ol>
+                <li>Choisissez votre photo</li>
+                <li>Ajustez le cadrage dans le cadre</li>
+                <li>Générez puis téléchargez votre affiche</li>
+            </ol>
+        </div>
+
+        <div class="upload-section">
+            <h2>Votre photo</h2>
+            <div class="file-input-wrapper">
+                <label for="userImage" class="file-input-label">
+                    Choisir une photo
+                </label>
+                <!-- <input type="file" id="userImage" accept="image/*" capture="user"> -->
+                <input type="file" id="userImage" accept="image/*" >
+            </div>
+            <img id="previewImage" alt="Aperçu de votre photo">
+            <button class="btn btn-adjust" id="adjustBtn" style="display: none; margin-top: 12px;">
+                Ajuster le cadrage
+            </button>
+        </div>
+
+        <div class="adjust-section" id="adjustSection">
+            <h3>Ajustement</h3>
+            <p class="adjust-hint">Glissez pour déplacer · Pincez ou utilisez le zoom</p>
+            <div class="adjust-preview-container" id="adjustPreviewContainer">
+                <canvas id="adjustPreviewCanvas"></canvas>
+            </div>
+            <div class="adjust-controls">
+                <label for="zoomSlider">Zoom</label>
+                <input type="range" id="zoomSlider" min="0.5" max="2.5" step="0.05" value="1">
+                <span id="zoomValue">100%</span>
+            </div>
+            <div class="move-pad">
+                <div></div>
+                <button type="button" class="btn btn-secondary" id="moveUpBtn" aria-label="Monter">↑</button>
+                <div></div>
+                <button type="button" class="btn btn-secondary" id="moveLeftBtn" aria-label="Gauche">←</button>
+                <button type="button" class="btn btn-secondary" id="resetAdjustBtn" aria-label="Réinitialiser">↺</button>
+                <button type="button" class="btn btn-secondary" id="moveRightBtn" aria-label="Droite">→</button>
+                <div></div>
+                <button type="button" class="btn btn-secondary" id="moveDownBtn" aria-label="Descendre">↓</button>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="canvas-section">
+            <h2>Votre affiche</h2>
+            <div class="loading" id="loading">Génération en cours…</div>
+            <div class="canvas-wrapper">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+
+        <div class="footer-signature">
+            Développé par <span class="signature"><a class="signature" href="https://github.com/chaibouu" target="_blank">Chaibouu</a></span>
+        </div>
+    </div>
+
+    <div class="sticky-actions">
+        <button class="btn btn-primary" id="generateBtn" disabled>Générer</button>
+        <button class="btn btn-success" id="downloadBtn" disabled>Télécharger</button>
+    </div>
+
+    <script>
+        const userImageInput = document.getElementById('userImage');
+        const previewImage = document.getElementById('previewImage');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loading = document.getElementById('loading');
+        const adjustPreviewCanvas = document.getElementById('adjustPreviewCanvas');
+        const adjustPreviewCtx = adjustPreviewCanvas.getContext('2d');
+        const adjustSection = document.getElementById('adjustSection');
+        const adjustBtn = document.getElementById('adjustBtn');
+        const zoomSlider = document.getElementById('zoomSlider');
+        const zoomValue = document.getElementById('zoomValue');
+        const resetAdjustBtn = document.getElementById('resetAdjustBtn');
+        const adjustPreviewContainer = document.getElementById('adjustPreviewContainer');
+
+        let userImage = null;
+        let posterImage = null;
+        let isPosterLoaded = false;
+
+        // Zone photo — hauteur inchangée, largeur seule ajustée
+        let photoArea = {
+            x: 0.3480,
+            y: 0.4720,
+            width: 0.3040,
+            height: 0.3200,
+            borderRadius: 0.0260
+        };
+
+        let photoAdjustment = { offsetX: 0, offsetY: 0, scale: 1 };
+        let isAdjusting = false;
+        let adjustStartX = 0;
+        let adjustStartY = 0;
+        let previewAreaHeight = 280;
+        let previewAreaWidth = 280;
+
+        function roundRectPath(context, x, y, w, h, r) {
+            const radius = Math.min(r, w / 2, h / 2);
+            context.beginPath();
+            context.moveTo(x + radius, y);
+            context.lineTo(x + w - radius, y);
+            context.quadraticCurveTo(x + w, y, x + w, y + radius);
+            context.lineTo(x + w, y + h - radius);
+            context.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+            context.lineTo(x + radius, y + h);
+            context.quadraticCurveTo(x, y + h, x, y + h - radius);
+            context.lineTo(x, y + radius);
+            context.quadraticCurveTo(x, y, x + radius, y);
+            context.closePath();
+        }
+
+        function isWhitePixel(data, width, x, y, threshold) {
+            const i = (y * width + x) * 4;
+            return data[i] > threshold && data[i + 1] > threshold && data[i + 2] > threshold;
+        }
+
+        function detectPhotoArea(img) {
+            const sampleWidth = img.width;
+            const sampleHeight = img.height;
+
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = sampleWidth;
+            tempCanvas.height = sampleHeight;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.drawImage(img, 0, 0);
+
+            const data = tempCtx.getImageData(0, 0, sampleWidth, sampleHeight).data;
+            const threshold = 232;
+            const rows = [];
+
+            // Scan ligne par ligne du carré blanc central (sans les badges du haut)
+            for (let y = Math.floor(sampleHeight * 0.465); y < Math.floor(sampleHeight * 0.755); y++) {
+                let left = -1;
+                let right = -1;
+
+                for (let x = Math.floor(sampleWidth * 0.24); x < Math.floor(sampleWidth * 0.76); x++) {
+                    if (!isWhitePixel(data, sampleWidth, x, y, threshold)) continue;
+                    if (left < 0) left = x;
+                    right = x;
+                }
+
+                const width = right - left;
+                if (width > sampleWidth * 0.14) {
+                    rows.push({ y, left, right, width });
+                }
+            }
+
+            if (!rows.length) {
+                return photoArea;
+            }
+
+            const maxWidth = Math.max(...rows.map(r => r.width));
+            const bodyRows = rows.filter(r => r.width >= maxWidth * 0.97);
+
+            if (bodyRows.length < 8) {
+                return photoArea;
+            }
+
+            const topY = bodyRows[0].y;
+            const bottomY = bodyRows[bodyRows.length - 1].y;
+
+            const coreRows = bodyRows.slice(
+                Math.floor(bodyRows.length * 0.25),
+                Math.floor(bodyRows.length * 0.75)
+            );
+            let minX = Math.round(coreRows.reduce((s, r) => s + r.left, 0) / coreRows.length);
+            let maxX = Math.round(coreRows.reduce((s, r) => s + r.right, 0) / coreRows.length);
+            let minY = topY;
+            let maxY = bottomY;
+
+            const rawW = maxX - minX;
+            const rawH = maxY - minY;
+            const size = Math.round((rawW + rawH) / 2);
+            const cx = (minX + maxX) / 2;
+            const cy = (minY + maxY) / 2;
+
+            // Hauteur & position verticale — logique d'origine (ne pas modifier)
+            minY = Math.round(cy - size / 2);
+            maxY = minY + size;
+            minY += 1;
+            maxY -= 1;
+            const boxH = maxY - minY;
+
+            // Largeur seule — réduite ~5 % par rapport au carré d'origine
+            const widthScale = 1.20;
+            const boxW = Math.round(size * widthScale);
+            minX = Math.round(cx - boxW / 2);
+
+            return {
+                x: minX / sampleWidth,
+                y: minY / sampleHeight,
+                width: boxW / sampleWidth,
+                height: boxH / sampleHeight,
+                borderRadius: Math.min(boxW, boxH) / sampleWidth * 0.082
+            };
+        }
+
+        function getPhotoAreaPixels(cw, ch) {
+            return {
+                x: photoArea.x * cw,
+                y: photoArea.y * ch,
+                width: photoArea.width * cw,
+                height: photoArea.height * ch,
+                borderRadius: photoArea.borderRadius * cw
+            };
+        }
+
+        function getCoverDimensions(imgW, imgH, boxW, boxH, scale) {
+            const aspectRatio = imgW / imgH;
+            const boxRatio = boxW / boxH;
+            let drawWidth;
+            let drawHeight;
+
+            if (aspectRatio > boxRatio) {
+                drawHeight = boxH * scale;
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                drawWidth = boxW * scale;
+                drawHeight = drawWidth / aspectRatio;
+            }
+
+            return { drawWidth, drawHeight };
+        }
+
+        function drawPhotoInArea(targetCtx, img, area, adjustment, previewMode) {
+            const { x, y, width, height, borderRadius } = area;
+            const { drawWidth, drawHeight } = getCoverDimensions(
+                img.width,
+                img.height,
+                width,
+                height,
+                adjustment.scale
+            );
+
+            let offsetX = adjustment.offsetX;
+            let offsetY = adjustment.offsetY;
+
+            if (!previewMode) {
+                offsetX *= width / previewAreaWidth;
+                offsetY *= height / previewAreaHeight;
+            }
+
+            const drawX = x + (width - drawWidth) / 2 + offsetX;
+            const drawY = y + (height - drawHeight) / 2 + offsetY;
+
+            targetCtx.save();
+            roundRectPath(targetCtx, x, y, width, height, borderRadius);
+            targetCtx.clip();
+
+            targetCtx.fillStyle = '#ffffff';
+            targetCtx.fillRect(x, y, width, height);
+
+            targetCtx.drawImage(img, drawX, drawY, drawWidth + 2, drawHeight);
+            targetCtx.restore();
+        }
+
+        function updateAdjustPreview() {
+            if (!userImage) return;
+
+            const containerWidth = adjustPreviewContainer.clientWidth || 280;
+
+            const aspectRatio = photoArea.width / photoArea.height;
+            const previewHeight = containerWidth / aspectRatio;
+            previewAreaWidth = containerWidth;
+            previewAreaHeight = previewHeight;
+
+            adjustPreviewCanvas.width = containerWidth;
+            adjustPreviewCanvas.height = previewHeight;
+            adjustPreviewContainer.style.aspectRatio = `${photoArea.width} / ${photoArea.height}`;
+
+            const area = {
+                x: 0,
+                y: 0,
+                width: containerWidth,
+                height: previewHeight,
+                borderRadius: photoArea.borderRadius * containerWidth
+            };
+
+            adjustPreviewCtx.clearRect(0, 0, containerWidth, previewHeight);
+            drawPhotoInArea(adjustPreviewCtx, userImage, area, photoAdjustment, true);
+        }
+
+        function resetAdjustments() {
+            photoAdjustment = { offsetX: 0, offsetY: 0, scale: 1 };
+            zoomSlider.value = 1;
+            zoomValue.textContent = '100%';
+            updateAdjustPreview();
+        }
+
+        const posterImg = new Image();
+        posterImg.onload = function() {
+            posterImage = this;
+            isPosterLoaded = true;
+            canvas.width = this.width;
+            canvas.height = this.height;
+            photoArea = detectPhotoArea(this);
+            ctx.drawImage(posterImage, 0, 0);
+            if (userImage) generateBtn.disabled = false;
+        };
+        posterImg.onerror = function() {
+            alert('Erreur : le fichier affiche.jpg est introuvable.');
+        };
+        posterImg.src = 'affiche.jpg';
+
+        userImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                userImage = new Image();
+                userImage.onload = function() {
+                    previewImage.src = event.target.result;
+                    previewImage.style.display = 'block';
+                    generateBtn.disabled = !isPosterLoaded;
+                    adjustBtn.style.display = 'block';
+                    resetAdjustments();
+                    adjustSection.classList.add('active');
+                    adjustBtn.textContent = 'Masquer l\'ajustement';
+                    requestAnimationFrame(updateAdjustPreview);
+                };
+                userImage.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        generateBtn.addEventListener('click', function() {
+            if (!posterImage || !userImage) {
+                alert('Veuillez d\'abord choisir une photo.');
+                return;
+            }
+
+            loading.classList.add('active');
+            generateBtn.disabled = true;
+
+            requestAnimationFrame(function() {
+                ctx.drawImage(posterImage, 0, 0);
+
+                const area = getPhotoAreaPixels(canvas.width, canvas.height);
+                drawPhotoInArea(ctx, userImage, area, photoAdjustment, false);
+
+                loading.classList.remove('active');
+                generateBtn.disabled = false;
+                downloadBtn.disabled = false;
+
+                document.querySelector('.canvas-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (!canvas.width || !canvas.height) {
+                alert('Veuillez d\'abord générer l\'affiche.');
+                return;
+            }
+
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'affiche-jy-serai-tillaberi.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', 0.92);
+        });
+
+        adjustBtn.addEventListener('click', function() {
+            const isActive = adjustSection.classList.toggle('active');
+            adjustBtn.textContent = isActive ? 'Masquer l\'ajustement' : 'Ajuster le cadrage';
+            if (isActive) updateAdjustPreview();
+        });
+
+        zoomSlider.addEventListener('input', function() {
+            photoAdjustment.scale = parseFloat(this.value);
+            zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+            updateAdjustPreview();
+        });
+
+        function movePhoto(deltaX, deltaY) {
+            photoAdjustment.offsetX += deltaX;
+            photoAdjustment.offsetY += deltaY;
+            updateAdjustPreview();
+        }
+
+        const moveStep = 8;
+        document.getElementById('moveUpBtn').addEventListener('click', () => movePhoto(0, -moveStep));
+        document.getElementById('moveDownBtn').addEventListener('click', () => movePhoto(0, moveStep));
+        document.getElementById('moveLeftBtn').addEventListener('click', () => movePhoto(-moveStep, 0));
+        document.getElementById('moveRightBtn').addEventListener('click', () => movePhoto(moveStep, 0));
+        resetAdjustBtn.addEventListener('click', resetAdjustments);
+
+        adjustPreviewContainer.addEventListener('mousedown', function(e) {
+            if (!userImage) return;
+            isAdjusting = true;
+            const rect = adjustPreviewContainer.getBoundingClientRect();
+            adjustStartX = e.clientX - rect.left - photoAdjustment.offsetX;
+            adjustStartY = e.clientY - rect.top - photoAdjustment.offsetY;
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isAdjusting) return;
+            const rect = adjustPreviewContainer.getBoundingClientRect();
+            photoAdjustment.offsetX = e.clientX - rect.left - adjustStartX;
+            photoAdjustment.offsetY = e.clientY - rect.top - adjustStartY;
+            updateAdjustPreview();
+        });
+
+        document.addEventListener('mouseup', () => { isAdjusting = false; });
+
+        adjustPreviewContainer.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.08 : 0.08;
+            photoAdjustment.scale = Math.max(0.5, Math.min(2.5, photoAdjustment.scale + delta));
+            zoomSlider.value = photoAdjustment.scale;
+            zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+            updateAdjustPreview();
+        }, { passive: false });
+
+        let lastTouchDistance = 0;
+
+        adjustPreviewContainer.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 1) {
+                isAdjusting = true;
+                const rect = adjustPreviewContainer.getBoundingClientRect();
+                adjustStartX = e.touches[0].clientX - rect.left - photoAdjustment.offsetX;
+                adjustStartY = e.touches[0].clientY - rect.top - photoAdjustment.offsetY;
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                lastTouchDistance = Math.sqrt(dx * dx + dy * dy);
+            }
+        }, { passive: true });
+
+        adjustPreviewContainer.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (e.touches.length === 1 && isAdjusting) {
+                const rect = adjustPreviewContainer.getBoundingClientRect();
+                photoAdjustment.offsetX = e.touches[0].clientX - rect.left - adjustStartX;
+                photoAdjustment.offsetY = e.touches[0].clientY - rect.top - adjustStartY;
+                updateAdjustPreview();
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (lastTouchDistance > 0) {
+                    const scaleChange = (distance - lastTouchDistance) / 80;
+                    photoAdjustment.scale = Math.max(0.5, Math.min(2.5, photoAdjustment.scale + scaleChange));
+                    zoomSlider.value = photoAdjustment.scale;
+                    zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+                    updateAdjustPreview();
+                }
+                lastTouchDistance = distance;
+            }
+        }, { passive: false });
+
+        adjustPreviewContainer.addEventListener('touchend', function() {
+            isAdjusting = false;
+            lastTouchDistance = 0;
+        });
+
+        window.addEventListener('resize', function() {
+            if (adjustSection.classList.contains('active') && userImage) {
+                updateAdjustPreview();
+            }
+        });
+    </script>
+</body>
+</html>
